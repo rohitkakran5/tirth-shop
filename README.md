@@ -25,5 +25,5 @@ Works on Android phones (install from Chrome) and computers, also without intern
    **Authentication → Settings → Authorized domains** → add the site address (e.g. `yourname.github.io`).
 2. **Firestore Database** → create (production mode) → **Rules** → paste `firestore.rules` with your Gmail addresses → Publish.
 3. **Project settings → Your apps → Web app** → copy `firebaseConfig`, then either paste it in the app
-   (Settings → Multi-Device Sync) on each device, or put it in `index.html` at `const FIREBASE_CONFIG = null;`.
+   (Settings → Multi-Device Sync) on each device, or put it in `index.html` at `const FIREBASE_CONFIG`.
 4. Host these files on HTTPS (e.g. GitHub Pages) and open the site on each device.
