@@ -596,6 +596,115 @@
       background: #fafaf9;
     }
 
+    /* ===== Redesign phase 1: bottom bar, Today, More, payment buttons ===== */
+    .modal-backdrop { z-index: 200; }
+    #mainNav button { display: inline-flex; align-items: center; gap: 6px; }
+    #mainNav .ni { font-size: 1rem; line-height: 1; }
+    .seg-bar { display: flex; gap: 6px; margin-bottom: 14px; flex-wrap: wrap; }
+    .seg-bar button {
+      border: 1px solid var(--border); background: #fff; color: var(--text);
+      padding: 9px 16px; border-radius: 99px; font-weight: 600; font-size: 0.88rem; cursor: pointer; min-height: 40px;
+    }
+    .seg-bar button.active { background: var(--primary); border-color: var(--primary); color: #fff; }
+
+    .today-head { display: flex; justify-content: space-between; align-items: baseline; gap: 10px; margin: 2px 2px 12px; flex-wrap: wrap; }
+    .today-head h2 { color: var(--primary); font-size: 1.25rem; }
+    .today-staff, .today-sub { color: var(--muted); font-size: 0.85rem; }
+    .today-cards { display: grid; grid-template-columns: repeat(auto-fill, minmax(260px, 1fr)); gap: 10px; margin-bottom: 16px; }
+    .today-card {
+      text-align: left; background: #fff; border: 1px solid var(--border); border-left: 5px solid var(--border);
+      border-radius: 12px; padding: 12px 14px; cursor: pointer; display: grid; grid-template-columns: 1fr auto; gap: 4px 10px; font-size: 0.95rem; color: var(--text);
+    }
+    .today-card .tc-label { font-weight: 600; align-self: center; }
+    .today-card .tc-num { font-size: 1.5rem; font-weight: 800; color: var(--primary); }
+    .today-card ul { grid-column: 1 / -1; list-style: none; color: var(--muted); font-size: 0.8rem; line-height: 1.5; }
+    .today-card.warn { border-left-color: #d97706; }
+    .today-card.bad { border-left-color: var(--danger); }
+    .today-card.bad .tc-num { color: var(--danger); }
+    .today-card.good { border-left-color: var(--success); }
+    .today-card.zero { opacity: 0.6; }
+    .takings-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(140px, 1fr)); gap: 8px; }
+    .tk { background: #fafaf9; border: 1px solid var(--border); border-radius: 10px; padding: 10px 12px; display: flex; flex-direction: column; gap: 2px; }
+    .tk span { font-size: 0.78rem; color: var(--muted); }
+    .tk strong { font-size: 1.1rem; color: var(--text); }
+    .tk-total { background: #fff7ed; border-color: #fed7aa; }
+    .tk-total strong { color: var(--primary); }
+
+    .more-list { display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 10px; }
+    .more-item {
+      display: flex; align-items: center; gap: 14px; text-align: left; background: #fff; border: 1px solid var(--border);
+      border-radius: 12px; padding: 14px; cursor: pointer; color: var(--text); min-height: 64px;
+    }
+    .more-item .mi { font-size: 1.5rem; width: 32px; text-align: center; }
+    .more-item strong { display: block; font-size: 0.98rem; }
+    .more-item small { display: block; color: var(--muted); font-size: 0.8rem; margin-top: 2px; }
+
+    .cust-info { display: none; background: #f0fdf4; border: 1px solid #bbf7d0; color: #14532d; border-radius: 8px; padding: 8px 10px; font-size: 0.82rem; line-height: 1.5; margin-bottom: 10px; }
+    .cust-info .btn { margin-top: 6px; }
+    .pay-group { grid-column: 1 / -1; }
+    .pay-btns { display: grid; grid-template-columns: repeat(auto-fill, minmax(84px, 1fr)); gap: 6px; }
+    .pay-btns button {
+      min-height: 44px; border-radius: 10px; border: 1px solid var(--border); background: #fff; font-weight: 600; font-size: 0.9rem; cursor: pointer; color: var(--text);
+    }
+    .pay-btns button.active { background: #fff7ed; border: 2px solid var(--primary); color: var(--primary); }
+    .pay-btns .pay-cn { display: none; }
+    .pay-extra { display: none; margin-top: 8px; }
+    .pay-extra input { width: 100%; margin-top: 4px; }
+    .cash-change { margin-top: 6px; font-size: 0.92rem; }
+
+    .sticky-bill { display: none; }
+    body.role-tailor .t-money, body.role-tailor .t-phone, body.role-tailor .t-admin, body.role-tailor .t-hide,
+    body.role-tailor #mainNav button[data-nav="pos"], body.role-tailor #mainNav button[data-nav="stock"] { display: none !important; }
+    body.staff-locked #activeStaffSelect { display: none; }
+
+    @media (max-width: 900px) {
+      body { padding-bottom: calc(72px + env(safe-area-inset-bottom)); }
+      header { padding: 8px 12px; }
+      .brand-sub { display: none; }
+      .header-logo-thumb { width: 36px; height: 36px; }
+      .brand h1 { font-size: 1.05rem; }
+      .header-right { width: auto; overflow: visible; padding-bottom: 0; }
+      #mainNav {
+        position: fixed; left: 0; right: 0; bottom: 0; z-index: 100;
+        background: #fff; border-top: 1px solid var(--border); box-shadow: 0 -2px 10px rgba(0,0,0,0.06);
+        display: flex; gap: 0; padding: 4px 4px calc(4px + env(safe-area-inset-bottom)); overflow: visible;
+      }
+      #mainNav button {
+        flex: 1; flex-direction: column; gap: 2px; background: none; border: none; color: var(--muted);
+        padding: 6px 2px; min-height: 56px; border-radius: 12px; font-size: 0.74rem; justify-content: center;
+      }
+      #mainNav button .ni { font-size: 1.3rem; }
+      #mainNav button.active, #mainNav button:hover { background: #fff7ed; color: var(--primary); }
+      .container { margin-top: 12px; padding: 0 10px; }
+      .sticky-bill.show {
+        display: flex; position: fixed; left: 10px; right: 10px; bottom: calc(76px + env(safe-area-inset-bottom)); z-index: 90;
+        justify-content: space-between; align-items: center; gap: 10px;
+        background: var(--primary); color: #fff; border-radius: 14px; padding: 14px 18px; font-size: 1rem;
+        box-shadow: 0 6px 18px rgba(124,45,18,0.35); cursor: pointer;
+      }
+      body.bill-in-view .sticky-bill.show { display: none; }
+      body[data-view="pos"] .container { padding-bottom: 64px; }
+      .product-grid { grid-template-columns: repeat(2, 1fr); gap: 8px; }
+      .prod-img { height: 96px; }
+      .prod-info { padding: 8px; }
+      .prod-title { font-size: 0.82rem; }
+      .prod-meta { display: none; }
+      .panel { padding: 12px; }
+      .pay-btns { grid-template-columns: repeat(3, 1fr); }
+      #completeSaleBtn { min-height: 52px; font-size: 1rem; }
+      .today-cards, .more-list { grid-template-columns: 1fr; }
+      .stats-row { grid-template-columns: repeat(2, 1fr); gap: 8px; margin-bottom: 12px; }
+      .stat-card { padding: 10px 12px; }
+      .stat-card h3 { font-size: 1.2rem; }
+      /* stitching orders as cards on phones */
+      #view-tailor table thead { display: none; }
+      #view-tailor table, #view-tailor tbody { display: block; }
+      #view-tailor tbody tr { display: grid; grid-template-columns: 1fr 1fr; gap: 6px 10px; border: 1px solid var(--border); border-radius: 12px; padding: 10px; margin-bottom: 10px; background: #fff; }
+      #view-tailor tbody td { display: block; border: none; padding: 0; }
+      #view-tailor tbody td:nth-child(3), #view-tailor tbody td:nth-child(5), #view-tailor tbody td:nth-child(7) { grid-column: 1 / -1; }
+      #view-tailor tbody td[colspan] { grid-column: 1 / -1; }
+      #view-tailor .status-select { width: 100%; min-height: 44px; font-size: 0.95rem; }
+    }
     @media print {
       html, body { margin: 0 !important; padding: 0 !important; background: #fff !important; -webkit-print-color-adjust: exact; print-color-adjust: exact; }
       body.print-receipt * { visibility: hidden; }
@@ -646,26 +755,50 @@
         <span id="headerBrandTitle">Shrivastralya</span>
         <span id="syncStatusPill" class="sync-pill">Local Mode (Single Device)</span>
       </h1>
-      <span>Ladies Suits & Sarees • Sector-6 HUDA Market, Panipat</span>
+      <span class="brand-sub">Ladies Suits & Sarees • Sector-6 HUDA Market, Panipat</span>
     </div>
   </div>
   <div class="header-right">
     <button id="installAndroidAppBtn" onclick="triggerAndroidInstall()">📲 Install App</button>
     <select id="activeStaffSelect" class="staff-switcher" onchange="switchActiveStaff()" title="Active Staff Member"></select>
-    <nav>
-      <button class="active" onclick="switchView('pos', this)">🧾 POS Billing</button>
-      <button onclick="switchView('inventory', this)">👗 Catalog & Stock</button>
-      <button onclick="switchView('tailor', this)">🧵 Tailor & Stitching</button>
-      <button onclick="switchView('shipping', this)">🚚 Shipping</button>
-      <button onclick="switchView('credits', this)">🎟️ Store Credits</button>
-      <button onclick="switchView('tags', this)">🏷️ Print Tags</button>
-      <button onclick="switchView('sales', this)">📊 Sales</button>
-      <button onclick="switchView('cloud', this)">☁️ Branding & Cloud</button>
+    <nav id="mainNav">
+      <button data-nav="today" onclick="goTab('today')"><span class="ni">🏠</span><span class="nl">Today</span></button>
+      <button data-nav="pos" class="active" onclick="goTab('pos')"><span class="ni">🧾</span><span class="nl">Bill</span></button>
+      <button data-nav="orders" onclick="goTab('orders')"><span class="ni">🧵</span><span class="nl">Orders</span></button>
+      <button data-nav="stock" onclick="goTab('stock')"><span class="ni">👗</span><span class="nl">Stock</span></button>
+      <button data-nav="more" onclick="goTab('more')"><span class="ni">☰</span><span class="nl">More</span></button>
     </nav>
   </div>
 </header>
 
 <div class="container">
+
+  <!-- ==================== TODAY VIEW ==================== -->
+  <div id="view-today" class="view">
+    <div class="today-head">
+      <h2 id="todayTitle">Today</h2>
+      <span id="todayStaff" class="today-staff"></span>
+    </div>
+    <div id="todayCards" class="today-cards"></div>
+    <div class="panel today-money t-money">
+      <div class="panel-header"><h2>Today's takings</h2><span id="todayBills" class="today-sub"></span></div>
+      <div id="todayTakings" class="takings-grid"></div>
+    </div>
+  </div>
+
+  <!-- ==================== MORE VIEW ==================== -->
+  <div id="view-more" class="view">
+    <div class="more-list">
+      <button class="more-item t-hide" onclick="goTab('pos'); openReturnModal();"><span class="mi">🔄</span><span><strong>Return or exchange</strong><small>Find the bill and take items back</small></span></button>
+      <button class="more-item t-hide" onclick="switchView('credits')"><span class="mi">🎟️</span><span><strong>Store credits</strong><small>Credit notes and gift vouchers</small></span></button>
+      <button class="more-item t-hide" onclick="switchView('sales')"><span class="mi">📊</span><span><strong>Sales and bills</strong><small>All bills, totals, backup</small></span></button>
+      <button class="more-item t-hide" onclick="switchView('tags')"><span class="mi">🏷️</span><span><strong>Print labels</strong><small>Barcode and QR price tags</small></span></button>
+      <button class="more-item t-hide" onclick="switchView('cloud')"><span class="mi">⚙️</span><span><strong>Settings and staff</strong><small>Shop details, sync, staff logins</small></span></button>
+      <button class="more-item" onclick="toggleLang()"><span class="mi">🌐</span><span><strong id="langBtnLabel">हिंदी में देखें</strong><small>English / हिंदी</small></span></button>
+      <button class="more-item" id="moreInstallBtn" style="display:none;" onclick="triggerAndroidInstall()"><span class="mi">📲</span><span><strong>Install app</strong><small>Add VastraPOS to this phone</small></span></button>
+      <button class="more-item" id="moreSignOutBtn" style="display:none;" onclick="cloudSignOut()"><span class="mi">🚪</span><span><strong>Sign out</strong><small id="moreSignedInAs"></small></span></button>
+    </div>
+  </div>
 
   <!-- ==================== 1. POS BILLING VIEW ==================== -->
   <div id="view-pos" class="view active">
@@ -707,7 +840,7 @@
       <!-- Right: Checkout & GST -->
       <div class="panel">
         <div class="panel-header">
-          <h2>Current Bill <span id="billingStaffBadge" class="badge badge-info" style="margin-left:6px;"></span></h2>
+          <h2 id="billPanelHead">Current Bill <span id="billingStaffBadge" class="badge badge-info" style="margin-left:6px;"></span></h2>
           <div style="display:flex; gap:6px; flex-wrap:wrap;">
             <button class="btn btn-blue btn-sm" onclick="toggleShippingDrawer()">🚚 Add Shipping</button>
             <button class="btn btn-warn btn-sm" onclick="openReturnModal()">🔄 Exchange / Return</button>
@@ -719,8 +852,8 @@
         <div id="exchangeBanner" style="display:none; background:#fef2f2; border:1px solid #fecaca; color:#991b1b; padding:8px 10px; border-radius:8px; font-size:0.8rem; margin-bottom:10px; font-weight:600;"></div>
 
         <div class="cust-box">
-          <input type="text" id="custName" placeholder="Customer / Reseller Name" oninput="checkCustomerAvailableCredits()" />
-          <input type="tel" id="custPhone" placeholder="WhatsApp No. (10 digits)" oninput="checkCustomerAvailableCredits()" />
+          <input type="tel" id="custPhone" inputmode="numeric" placeholder="Customer phone (10 digits)" oninput="checkCustomerAvailableCredits(); lookupCustomer('pos')" />
+          <input type="text" id="custName" placeholder="Customer / Reseller Name" oninput="custNameAuto = false; checkCustomerAvailableCredits()" />
         </div>
 
         <!-- Optional Shipping / Parcel Details Box -->
@@ -737,6 +870,7 @@
           <input type="text" id="shipAwbInput" placeholder="AWB / Tracking No. (Optional)" />
         </div>
 
+        <div id="custInfo" class="cust-info"></div>
         <div id="custCreditNotice" class="credit-alert-bar">
           <span id="custCreditNoticeText"></span>
           <button type="button" class="btn btn-purple btn-sm" onclick="openRedeemCreditModal()">Redeem</button>
@@ -751,8 +885,7 @@
             <label>Tax / Invoice Type</label>
             <select id="gstType" onchange="updateTotals()">
               <option value="0">Non-GST Estimate Slip (0%)</option>
-              <option value="5">GST Invoice — 5% (Apparel ≤ ₹1000)</option>
-              <option value="12">GST Invoice — 12% (Apparel > ₹1000)</option>
+              <option value="auto">GST bill (auto 5% / 18%)</option>
             </select>
           </div>
           <div class="form-group">
@@ -763,15 +896,35 @@
             <label>🚚 Shipping / Courier (₹)</label>
             <input type="number" id="billShipping" value="0" min="0" oninput="onShippingChargeChange()" />
           </div>
-          <div class="form-group">
-            <label>Payment / Settlement Mode</label>
-            <select id="payMode" onchange="updateTotals()">
+          <div class="form-group pay-group">
+            <label>Payment</label>
+            <div class="pay-btns" id="payBtns">
+              <button type="button" data-pay="UPI / QR" onclick="setPay('UPI / QR')">UPI</button>
+              <button type="button" data-pay="Cash" onclick="setPay('Cash')">Cash</button>
+              <button type="button" data-pay="Card" onclick="setPay('Card')">Card</button>
+              <button type="button" data-pay="Split" onclick="setPay('Split')">Split</button>
+              <button type="button" data-pay="Credit / Khata (Reseller)" onclick="setPay('Credit / Khata (Reseller)')">Khata</button>
+              <button type="button" data-pay="COD (Cash on Delivery)" onclick="setPay('COD (Cash on Delivery)')">COD</button>
+              <button type="button" data-pay="Store Credit Note" class="pay-cn" onclick="setPay('Store Credit Note')">Credit note</button>
+            </div>
+            <div id="cashRow" class="pay-extra">
+              <label>Cash received (₹)</label>
+              <input type="number" id="cashReceived" inputmode="numeric" min="0" placeholder="e.g. 5000" oninput="updatePayExtras()" />
+              <div id="cashChange" class="cash-change"></div>
+            </div>
+            <div id="splitRow" class="pay-extra">
+              <label>Cash part (₹) — the rest is UPI</label>
+              <input type="number" id="splitCash" inputmode="numeric" min="0" placeholder="e.g. 2000" oninput="updatePayExtras()" />
+              <div id="splitInfo" class="cash-change"></div>
+            </div>
+            <select id="payMode" onchange="updateTotals()" style="display:none;">
               <option value="UPI / QR">UPI / QR</option>
               <option value="Cash">Cash</option>
               <option value="Card">Card</option>
               <option value="COD (Cash on Delivery)">COD (Cash on Delivery)</option>
               <option value="Credit / Khata (Reseller)">Credit / Khata (Reseller)</option>
               <option value="Store Credit Note">Issue Store Credit Note (For Returns)</option>
+              <option value="Split">Split (Cash + UPI)</option>
             </select>
           </div>
         </div>
@@ -801,7 +954,7 @@
           <div class="total-row" id="shippingTotalRow" style="display:none; color:#0369a1; font-weight:600;">
             <span>Shipping / Courier</span><span id="shippingDisplay">+ ₹0</span>
           </div>
-          <div class="total-row"><span>GST (<span id="gstRateLabel">0</span>%)</span><span id="gstAmount">₹0</span></div>
+          <div class="total-row"><span>GST (<span id="gstRateLabel">0%</span>)</span><span id="gstAmount">₹0</span></div>
           <div class="total-row grand"><span id="grandTotalLabel">Grand Total</span><span id="grandTotal">₹0</span></div>
         </div>
 
@@ -810,8 +963,14 @@
     </div>
   </div>
 
+  <div id="stickyBill" class="sticky-bill" onclick="scrollToBill()">
+    <span id="stickyBillText">0 items · ₹0</span>
+    <strong>Checkout ›</strong>
+  </div>
+
   <!-- ==================== 2. INVENTORY & CATALOG VIEW ==================== -->
   <div id="view-inventory" class="view">
+    <div class="seg-bar"><button data-view="inventory" onclick="switchView('inventory')">👗 Catalog & stock</button><button data-view="tags" onclick="switchView('tags')">🏷️ Print labels</button></div>
     <div class="panel">
       <!-- INBUILT BARCODE & QR QUICK INSTOCKING / RESTOCK SCANNER -->
       <div class="stock-in-box">
@@ -915,18 +1074,19 @@
 
   <!-- ==================== 3. CUSTOM TAILOR & SUIT STITCHING VIEW ==================== -->
   <div id="view-tailor" class="view">
+    <div class="seg-bar seg-orders"><button data-view="tailor" onclick="switchView('tailor')">🧵 Stitching</button><button data-view="shipping" class="t-hide" onclick="switchView('shipping')">🚚 Parcels</button></div>
     <div class="stats-row">
       <div class="stat-card"><span>Active Stitching Orders</span><h3 id="tStatActive">0</h3></div>
       <div class="stat-card"><span>Ready for Trial / Pickup</span><h3 id="tStatReady">0</h3></div>
       <div class="stat-card"><span>Due Today / Overdue</span><h3 id="tStatDue">0</h3></div>
-      <div class="stat-card"><span>Pending Tailor Balance</span><h3 id="tStatBalance">₹0</h3></div>
+      <div class="stat-card t-money"><span>Pending Tailor Balance</span><h3 id="tStatBalance">₹0</h3></div>
     </div>
 
     <div class="panel">
       <div class="panel-header">
-        <h2>New Customized Tailor / Suit Stitching Order</h2>
+        <h2 class="t-hide">New Customized Tailor / Suit Stitching Order</h2>
       </div>
-      <form id="tailorForm" class="inv-form" onsubmit="saveTailorOrder(event)">
+      <form id="tailorForm" class="inv-form t-hide" onsubmit="saveTailorOrder(event)">
         <input type="hidden" id="editTailorId" />
         <div class="form-group">
           <label>Customer Name *</label>
@@ -934,7 +1094,7 @@
         </div>
         <div class="form-group">
           <label>Customer WhatsApp No.</label>
-          <input type="tel" id="tCustPhone" placeholder="10-digit mobile no." />
+          <input type="tel" id="tCustPhone" inputmode="numeric" placeholder="10-digit mobile no." oninput="lookupCustomer('tailor')" />
         </div>
         <div class="form-group">
           <label>Service Type *</label>
@@ -1009,8 +1169,8 @@
               <th>Suit / Service & Measurements</th>
               <th>Tailor</th>
               <th>Status (Live Sync)</th>
-              <th>Charges / Balance</th>
-              <th>Actions</th>
+              <th class="t-money">Charges / Balance</th>
+              <th class="t-admin">Actions</th>
             </tr>
           </thead>
           <tbody id="tailorTableBody"></tbody>
@@ -1021,6 +1181,7 @@
 
   <!-- ==================== 4. SHIPPING & PARCEL DISPATCH VIEW ==================== -->
   <div id="view-shipping" class="view">
+    <div class="seg-bar seg-orders"><button data-view="tailor" onclick="switchView('tailor')">🧵 Stitching</button><button data-view="shipping" class="t-hide" onclick="switchView('shipping')">🚚 Parcels</button></div>
     <div class="stats-row">
       <div class="stat-card"><span>Pending Packing / Pickup</span><h3 id="sStatPending">0</h3></div>
       <div class="stat-card"><span>In Transit / Out for Delivery</span><h3 id="sStatTransit">0</h3></div>
@@ -1108,6 +1269,7 @@
 
   <!-- ==================== 5. CUSTOMER STORE CREDIT LEDGER VIEW ==================== -->
   <div id="view-credits" class="view">
+    <div class="seg-bar"><button onclick="goTab('more')">‹ More</button></div>
     <div class="stats-row">
       <div class="stat-card"><span>Active Store Credit Liability</span><h3 id="cStatActiveBal">₹0</h3></div>
       <div class="stat-card"><span>Active Credit Notes</span><h3 id="cStatActiveCount">0</h3></div>
@@ -1179,6 +1341,7 @@
 
   <!-- ==================== 6. PRINT QR & BARCODE TAGS VIEW ==================== -->
   <div id="view-tags" class="view">
+    <div class="seg-bar"><button data-view="inventory" onclick="switchView('inventory')">👗 Catalog & stock</button><button data-view="tags" onclick="switchView('tags')">🏷️ Print labels</button></div>
     <div class="panel">
       <div class="panel-header">
         <h2>Printable QR Code & Barcode Price Tags</h2>
@@ -1221,6 +1384,7 @@
 
   <!-- ==================== 7. SALES, EXCHANGES & BACKUP VIEW ==================== -->
   <div id="view-sales" class="view">
+    <div class="seg-bar"><button onclick="goTab('more')">‹ More</button></div>
     <div class="stats-row">
       <div class="stat-card"><span>Net Revenue (After Returns)</span><h3 id="statRevenue">₹0</h3></div>
       <div class="stat-card"><span>Total Bills / Exchanges</span><h3 id="statBills">0</h3></div>
@@ -1262,6 +1426,7 @@
 
   <!-- ==================== 8. BRANDING, MULTI-DEVICE CLOUD & STAFF VIEW ==================== -->
   <div id="view-cloud" class="view">
+    <div class="seg-bar"><button onclick="goTab('more')">‹ More</button></div>
     <div class="panel">
       <div class="panel-header">
         <h2>🏪 Shop Branding, Logo & Storefront Photo (Attached on Every Bill)</h2>
@@ -1345,6 +1510,10 @@
           </select>
         </div>
         <div class="form-group">
+          <label>Google email (their own login, optional)</label>
+          <input type="email" id="newStaffEmail" placeholder="e.g., masterji@gmail.com" />
+        </div>
+        <div class="form-group">
           <label>4-Digit PIN (Optional)</label>
           <input type="password" id="newStaffPin" maxlength="4" placeholder="e.g., 1234" />
         </div>
@@ -1358,6 +1527,7 @@
           <tr>
             <th>Staff Name</th>
             <th>Role</th>
+            <th>Google login</th>
             <th>PIN Protected</th>
             <th>Action</th>
           </tr>
@@ -1977,6 +2147,7 @@
     sel.innerHTML = staffList.map(s => `<option value="${s.id}" ${s.id === activeStaffId ? 'selected' : ''}>👤 ${s.name}</option>`).join('');
     const current = getActiveStaff();
     document.getElementById('billingStaffBadge').textContent = `Staff: ${current.name}`;
+    applyRole();
   }
 
   async function switchActiveStaff() {
@@ -2370,6 +2541,8 @@
         if (all || c.has('creditNotes')) renderCreditNotesTable();
         if (all || c.has('sales')) renderSales();
         renderCloudPanel();
+        if (currentView === 'today') renderToday();
+        applyRole();
       } catch (e) { console.warn('re-render', e); }
     }, 150);
   }
@@ -2501,10 +2674,11 @@
     const name = document.getElementById('newStaffName').value.trim();
     const role = document.getElementById('newStaffRole').value;
     const pin = document.getElementById('newStaffPin').value.trim();
+    const email = document.getElementById('newStaffEmail').value.trim().toLowerCase();
     if (!name) return;
 
     const pinHash = pin ? await hashPin(pin) : '';
-    staffList.push({ id: uid('s_'), name, role, pinHash });
+    staffList.push({ id: uid('s_'), name, role, pinHash, email });
     persist();
     e.target.reset();
     renderStaffSwitcher();
@@ -2531,6 +2705,7 @@
       <tr>
         <td><strong>${s.name}</strong></td>
         <td><span class="badge badge-info">${s.role}</span></td>
+        <td>${s.email ? escHtml(s.email) : '<span style="color:var(--muted);">Not set</span>'} <button class="btn btn-outline btn-sm" onclick="setStaffEmail('${s.id}')">${s.email ? 'Change' : 'Set'}</button></td>
         <td>${(s.pin || s.pinHash) ? '🔒 Yes' : 'No PIN'}</td>
         <td><button class="btn btn-danger btn-sm" onclick="removeStaffMember('${s.id}')">Remove</button></td>
       </tr>
@@ -2538,11 +2713,19 @@
   }
 
   // --- NAVIGATION ---
+  const VIEW_TAB = { today: 'today', pos: 'pos', tailor: 'orders', shipping: 'orders', inventory: 'stock', tags: 'stock', credits: 'more', sales: 'more', cloud: 'more', more: 'more' };
+  let currentView = 'pos';
   function switchView(viewId, btn) {
+    if (isTailorMode() && !['tailor', 'more', 'today'].includes(viewId)) viewId = 'tailor';
+    currentView = viewId;
     document.querySelectorAll('.view').forEach(v => v.classList.remove('active'));
-    document.querySelectorAll('nav button').forEach(b => b.classList.remove('active'));
     document.getElementById('view-' + viewId).classList.add('active');
-    if (btn) btn.classList.add('active');
+    const tab = VIEW_TAB[viewId] || 'more';
+    document.querySelectorAll('#mainNav button').forEach(b => b.classList.toggle('active', b.dataset.nav === tab));
+    document.querySelectorAll('.seg-bar button[data-view]').forEach(b => b.classList.toggle('active', b.dataset.view === viewId));
+    document.body.dataset.view = viewId;
+    if (viewId === 'today') renderToday();
+    if (viewId === 'more') renderMore();
     if (viewId === 'pos') renderPOSGrid();
     if (viewId === 'inventory') renderInventoryTable();
     if (viewId === 'tailor') renderTailorOrders();
@@ -2555,6 +2738,10 @@
       syncShopBrandingUI();
       renderStaffTable();
     }
+    updateStickyBill();
+    window.scrollTo(0, 0);
+    // counter PC with a USB scanner: be ready to scan straight away (not on phones, where it would pop up the keyboard)
+    if (viewId === 'pos' && window.innerWidth > 900) { const sc = document.getElementById('barcodeScanInput'); if (sc) sc.focus(); }
   }
 
   // --- BARCODE / QR SCANNER HANDLER IN POS ---
@@ -2812,6 +2999,10 @@
     document.getElementById('posShippingDrawer').style.display = 'none';
     document.getElementById('exchangeBanner').style.display = 'none';
     document.getElementById('custCreditNotice').style.display = 'none';
+    document.getElementById('cashReceived').value = '';
+    document.getElementById('splitCash').value = '';
+    document.getElementById('custInfo').style.display = 'none';
+    custNameAuto = false;
     renderCart();
   }
 
@@ -2900,8 +3091,8 @@
     const disc = Math.max(0, Number(document.getElementById('billDiscount').value) || 0);
     const shipping = Math.max(0, Number(document.getElementById('billShipping').value) || 0);
     const netBeforeTax = sub - returnCredit - disc;
-    const gstRate = Number(document.getElementById('gstType').value) || 0;
-    const gstAmt = netBeforeTax > 0 ? Math.round((netBeforeTax * gstRate) / 100) : 0;
+    const gst = calcGST(sub, netBeforeTax);
+    const gstRate = gst.rate, gstAmt = gst.amount, gstLabel = gst.label;
     let totalBeforeVoucher = netBeforeTax + gstAmt + shipping;
 
     let appliedCreditAmt = 0;
@@ -2947,7 +3138,7 @@
     }
 
     document.getElementById('discDisplay').textContent = `- ₹${disc}`;
-    document.getElementById('gstRateLabel').textContent = gstRate;
+    document.getElementById('gstRateLabel').textContent = gstLabel;
     document.getElementById('gstAmount').textContent = `₹${gstAmt}`;
 
     const validityRow = document.getElementById('creditValidityRow');
@@ -2975,7 +3166,9 @@
       completeBtn.textContent = shipping > 0 ? '🚚 Generate Bill & Queue Shipment' : '✅ Generate Bill & Update Stock';
     }
 
-    return { sub, returnCredit, appliedCreditAmt, appliedCreditCode, disc, shipping, gstRate, gstAmt, grand };
+    const result = { sub, returnCredit, appliedCreditAmt, appliedCreditCode, disc, shipping, gstRate, gstAmt, gstLabel, grand };
+    afterTotals(result);
+    return result;
   }
 
   function completeSale() {
@@ -2983,13 +3176,18 @@
       alert('Please add at least one item or return entry to the bill.');
       return;
     }
-    const { sub, returnCredit, appliedCreditAmt, appliedCreditCode, disc, shipping, gstRate, gstAmt, grand } = updateTotals();
+    const { sub, returnCredit, appliedCreditAmt, appliedCreditCode, disc, shipping, gstRate, gstAmt, gstLabel, grand } = updateTotals();
     const custName = document.getElementById('custName').value.trim() || 'Walk-in Customer';
     const custPhone = document.getElementById('custPhone').value.trim();
     const shipAddress = document.getElementById('shipAddressInput').value.trim();
     const shipCourier = document.getElementById('shipCourierInput').value;
     const shipAwb = document.getElementById('shipAwbInput').value.trim();
-    const payMode = document.getElementById('payMode').value;
+    if (document.getElementById('payMode').value === 'Split' && grand > 0) {
+      const sc = Number(document.getElementById('splitCash').value) || 0;
+      if (sc <= 0 || sc >= grand) { alert('For a split payment, enter the cash part (more than ₹0 and less than the total). The rest is taken as UPI.'); return; }
+    }
+    const payMode = getPayMode(grand);
+    const cashReceived = payMode === 'Cash' ? (Number(document.getElementById('cashReceived').value) || 0) : 0;
     const shopName = shopSettings.name || 'Shrivastralya';
     const staffName = getActiveStaff().name;
 
@@ -3115,6 +3313,8 @@
       shipping,
       gstRate,
       gstAmt,
+      gstLabel: gstRate > 0 ? gstLabel : '',
+      cashReceived,
       grand
     };
 
@@ -3615,7 +3815,7 @@
       ${bill.returnCredit > 0 ? `<div class="receipt-line"><span>Returned Items Credit:</span><span>-₹${bill.returnCredit}</span></div>` : ''}
       ${bill.disc > 0 ? `<div class="receipt-line"><span>Discount:</span><span>-₹${bill.disc}</span></div>` : ''}
       ${bill.shipping > 0 ? `<div class="receipt-line"><span>Shipping / Courier:</span><span>+₹${bill.shipping}</span></div>` : ''}
-      ${bill.gstRate > 0 ? `<div class="receipt-line"><span>GST (${bill.gstRate}%):</span><span>₹${bill.gstAmt}</span></div>` : ''}
+      ${bill.gstRate > 0 ? `<div class="receipt-line"><span>GST (${bill.gstLabel || bill.gstRate + '%'}):</span><span>₹${bill.gstAmt}</span></div>` : ''}
       ${bill.appliedCreditAmt > 0 ? `<div class="receipt-line" style="color:#6b21a8;"><span>Store Credit (${bill.appliedCreditCode}):</span><span>-₹${bill.appliedCreditAmt}</span></div>` : ''}
       <div class="receipt-line" style="font-weight:bold; font-size:1rem; margin-top:6px;">
         <span>${bill.grand < 0 ? (bill.issuedCreditNoteCode ? 'CREDIT ISSUED:' : 'CASH/UPI REFUND:') : 'NET PAYABLE:'}</span>
@@ -3782,7 +3982,7 @@
       if (b.returnCredit > 0) pushText(`Return Credit: -Rs.${b.returnCredit}`);
       if (b.disc > 0) pushText(`Discount: -Rs.${b.disc}`);
       if (b.shipping > 0) pushText(`Shipping: +Rs.${b.shipping}`);
-      if (b.gstRate > 0) pushText(`GST (${b.gstRate}%): Rs.${b.gstAmt}`);
+      if (b.gstRate > 0) pushText(`GST (${b.gstLabel || b.gstRate + '%'}): Rs.${b.gstAmt}`);
       if (b.appliedCreditAmt > 0) pushText(`Voucher (${b.appliedCreditCode}): -Rs.${b.appliedCreditAmt}`);
 
       boldOn();
@@ -3875,7 +4075,7 @@
       const shipLines = (b.shipAddress || b.shipping > 0)
         ? `\n🚚 *Shipping Details:*\nAddress: ${b.shipAddress || 'On File'}${b.shipCourier ? `\nCourier: ${b.shipCourier}` : ''}${b.shipAwb ? `\nAWB Tracking: ${b.shipAwb}` : ''}\n`
         : '';
-      const msg = `*${shopSettings.name || b.shopName}*\n${shopSettings.address ? `📍 ${shopSettings.address}\n` : ''}${shopSettings.phones ? `📞 ${shopSettings.phones}\n` : ''}Ref No: ${b.billNo} (${b.date})\nCustomer: ${b.custName}\n\n${itemLines}\n${shipLines}\n${b.sub ? `New Items: ₹${b.sub}\n` : ''}${b.returnCredit ? `Return Credit: -₹${b.returnCredit}\n` : ''}${b.disc ? `Discount: -₹${b.disc}\n` : ''}${b.shipping ? `Shipping / Courier: +₹${b.shipping}\n` : ''}${b.gstRate ? `GST (${b.gstRate}%): ₹${b.gstAmt}\n` : ''}${b.appliedCreditAmt ? `Store Credit Redeemed (${b.appliedCreditCode}): -₹${b.appliedCreditAmt}\n` : ''}*${totalLabel}*\nMode: ${b.payMode}\n\nThank you for shopping with us!`;
+      const msg = `*${shopSettings.name || b.shopName}*\n${shopSettings.address ? `📍 ${shopSettings.address}\n` : ''}${shopSettings.phones ? `📞 ${shopSettings.phones}\n` : ''}Ref No: ${b.billNo} (${b.date})\nCustomer: ${b.custName}\n\n${itemLines}\n${shipLines}\n${b.sub ? `New Items: ₹${b.sub}\n` : ''}${b.returnCredit ? `Return Credit: -₹${b.returnCredit}\n` : ''}${b.disc ? `Discount: -₹${b.disc}\n` : ''}${b.shipping ? `Shipping / Courier: +₹${b.shipping}\n` : ''}${b.gstRate ? `GST (${b.gstLabel || b.gstRate + '%'}): ₹${b.gstAmt}\n` : ''}${b.appliedCreditAmt ? `Store Credit Redeemed (${b.appliedCreditCode}): -₹${b.appliedCreditAmt}\n` : ''}*${totalLabel}*\nMode: ${b.payMode}\n\nThank you for shopping with us!`;
       const phone = (b.custPhone || '').replace(/\D/g, '');
       const waPrefix = phone.length === 10 ? `91${phone}` : phone;
       window.open(`https://wa.me/${waPrefix}?text=${encodeURIComponent(msg)}`, '_blank');
@@ -4057,7 +4257,7 @@
           </td>
           <td>
             <strong>${o.custName}</strong><br/>
-            <span style="font-size:0.75rem; color:var(--muted);">${o.custPhone || 'No phone'}</span>
+            <span class="t-phone" style="font-size:0.75rem; color:var(--muted);">${o.custPhone || 'No phone'}</span>
           </td>
           <td>
             <strong>${o.serviceType}</strong> — ${o.itemDesc}
@@ -4070,14 +4270,14 @@
               ${statuses.map(st => `<option value="${st}" ${o.status === st ? 'selected' : ''}>${st}</option>`).join('')}
             </select>
           </td>
-          <td>
+          <td class="t-money">
             <div style="font-size:0.8rem;">Total: ₹${o.charge}</div>
             <div style="font-size:0.75rem; color:var(--muted);">Adv: ₹${o.advance}</div>
             <div style="font-weight:700; color:${balance > 0 ? 'var(--danger)' : 'var(--success)'};">
               ${balance > 0 ? `Due: ₹${balance}` : 'Paid'}
             </div>
           </td>
-          <td style="white-space:nowrap;">
+          <td class="t-admin" style="white-space:nowrap;">
             <div style="display:flex; flex-direction:column; gap:4px;">
               <div style="display:flex; gap:4px;">
                 <button class="btn btn-outline btn-sm" onclick="openTailorSlipModal('${o.id}')" title="Print Tailor Slip">🖨️ Slip</button>
@@ -4454,6 +4654,8 @@
     deferredInstallPrompt = e;
     const installBtn = document.getElementById('installAndroidAppBtn');
     if (installBtn) installBtn.style.display = 'inline-flex';
+    const moreInstall = document.getElementById('moreInstallBtn');
+    if (moreInstall) moreInstall.style.display = '';
   });
 
   async function triggerAndroidInstall() {
@@ -4466,6 +4668,359 @@
     deferredInstallPrompt = null;
   }
 
+  // =====================================================================
+  // REDESIGN (phase 1): Today screen, More menu, phone lookup, payment
+  // buttons, automatic GST, sticky bill bar, tailor-only login, Hindi.
+  // =====================================================================
+
+  // --- Bottom bar tabs ---
+  function goTab(tab) {
+    if (tab === 'orders') return switchView(['tailor', 'shipping'].includes(currentView) ? currentView : 'tailor');
+    if (tab === 'stock') return switchView(['inventory', 'tags'].includes(currentView) ? currentView : 'inventory');
+    switchView(tab);
+  }
+
+  // --- Today screen ---
+  function todayCard(cls, label, items, go, filter) {
+    const list = items.slice(0, 3).map(x => `<li>${escHtml(x)}</li>`).join('') + (items.length > 3 ? `<li>+${items.length - 3} ${t('more')}</li>` : '');
+    return `<button class="today-card ${items.length ? cls : 'zero'}" onclick="openFromToday('${go}', '${filter || ''}')">
+      <span class="tc-label">${t(label)}</span><span class="tc-num">${items.length}</span>
+      ${items.length ? `<ul>${list}</ul>` : ''}
+    </button>`;
+  }
+  function openFromToday(view, filter) {
+    if (view === 'tailor') {
+      currentTailorFilter = filter || 'ALL';
+      document.querySelectorAll('#tailorFilterChips .chip-btn').forEach(b => b.classList.toggle('active', (b.getAttribute('onclick') || '').includes(`'${currentTailorFilter}'`)));
+    }
+    switchView(view);
+  }
+  function renderToday() {
+    const day = todayLocal();
+    const d = new Date();
+    document.getElementById('todayTitle').textContent = d.toLocaleDateString(curLang === 'hi' ? 'hi-IN' : 'en-IN', { weekday: 'long', day: 'numeric', month: 'long' });
+    document.getElementById('todayStaff').textContent = getActiveStaff().name;
+    const open = tailorOrders.filter(o => !String(o.status).startsWith('5.'));
+    const ol = o => `${o.custName} · ${o.orderNo}`;
+    const trials = open.filter(o => o.deliveryDate === day);
+    const overdue = open.filter(o => o.deliveryDate && o.deliveryDate < day);
+    const ready = tailorOrders.filter(o => /^[34]\./.test(o.status));
+    const parcels = shipments.filter(s => /^[12]\./.test(s.status));
+    const low = products.filter(p => p.stock <= 2);
+    document.getElementById('todayCards').innerHTML =
+      todayCard('warn', 'Trials due today', trials.map(ol), 'tailor') +
+      todayCard('bad', 'Overdue orders', overdue.map(o => `${ol(o)} · ${o.deliveryDate}`), 'tailor') +
+      todayCard('good', 'Ready, not collected', ready.map(ol), 'tailor') +
+      (isTailorMode() ? '' :
+        todayCard('', 'Parcels to send', parcels.map(s => `${s.custName} · ${s.shipNo}`), 'shipping') +
+        todayCard('', 'Low stock (2 pcs or less)', low.map(p => `${p.code} · ${p.name} (${p.stock})`), 'inventory'));
+
+    // Takings: bills made today, split by payment type
+    const todays = sales.filter(s => s.createdAt && localISO(new Date(s.createdAt)) === day);
+    const sums = {};
+    const add = (k, v) => { sums[k] = (sums[k] || 0) + v; };
+    todays.forEach(s => {
+      const m = /^Split \(Cash ₹(\d+) \+ UPI ₹(\d+)\)/.exec(s.payMode || '');
+      if (m) { add('Cash', Number(m[1])); add('UPI / QR', Number(m[2])); }
+      else add(s.payMode || 'Other', Number(s.grand) || 0);
+    });
+    const total = todays.reduce((a, s) => a + (Number(s.grand) || 0), 0);
+    const short = { 'UPI / QR': 'UPI', 'COD (Cash on Delivery)': 'COD', 'Credit / Khata (Reseller)': 'Khata', 'Store Credit Note': 'Credit note' };
+    document.getElementById('todayBills').textContent = `${t('Bills')}: ${todays.length}`;
+    document.getElementById('todayTakings').innerHTML =
+      `<div class="tk tk-total"><span>${t('Total')}</span><strong>₹${total.toLocaleString('en-IN')}</strong></div>` +
+      Object.entries(sums).map(([k, v]) => `<div class="tk"><span>${t(short[k] || k)}</span><strong>₹${v.toLocaleString('en-IN')}</strong></div>`).join('');
+  }
+
+  // --- More menu ---
+  function renderMore() {
+    const signedIn = !!(CLOUD && CLOUD.user);
+    document.getElementById('moreSignOutBtn').style.display = signedIn ? '' : 'none';
+    document.getElementById('moreSignedInAs').textContent = signedIn ? (CLOUD.user.email || '') : '';
+    document.getElementById('moreInstallBtn').style.display = deferredInstallPrompt ? '' : 'none';
+    document.getElementById('langBtnLabel').textContent = curLang === 'hi' ? 'Show in English' : 'हिंदी में देखें';
+  }
+
+  // --- Customer lookup by phone number ---
+  let custNameAuto = false;
+  const phoneKey = v => String(v || '').replace(/\D/g, '').slice(-10);
+  function findCustomer(phone) {
+    const key = phoneKey(phone);
+    if (key.length < 10) return null;
+    const same = x => phoneKey(x.custPhone) === key;
+    const bills = sales.filter(same);
+    const orders = tailorOrders.filter(same);
+    const named = [...bills, ...orders, ...shipments.filter(same), ...creditNotes.filter(same)]
+      .map(x => (x.custName || '').trim()).filter(n => n && n !== 'Walk-in Customer');
+    const credit = creditNotes.filter(cn => same(cn) && getCreditStatus(cn) === 'ACTIVE').reduce((a, c) => a + c.remaining, 0);
+    return {
+      name: named[0] || '',
+      bills,
+      lastBill: bills[0] || null,
+      openOrders: orders.filter(o => !String(o.status).startsWith('5.')),
+      credit,
+      reseller: !!(bills[0] && bills[0].tier === 'Reseller')
+    };
+  }
+  function lookupCustomer(ctx) {
+    if (ctx === 'tailor') {
+      const c = findCustomer(document.getElementById('tCustPhone').value);
+      const nameEl = document.getElementById('tCustName');
+      if (c && c.name && !nameEl.value.trim()) nameEl.value = c.name;
+      return;
+    }
+    const box = document.getElementById('custInfo');
+    const phone = document.getElementById('custPhone').value;
+    const c = findCustomer(phone);
+    if (!c) { box.style.display = 'none'; return; }
+    const nameEl = document.getElementById('custName');
+    if (c.name && (!nameEl.value.trim() || custNameAuto)) { nameEl.value = c.name; custNameAuto = true; checkCustomerAvailableCredits(); }
+    const known = c.bills.length || c.openOrders.length || c.credit;
+    let html = known
+      ? `<strong>${t('Repeat customer')}</strong>` + (c.bills.length ? ` · ${t('Bills')}: ${c.bills.length}` : '') +
+        (c.lastBill ? ` · ${t('last')} ₹${c.lastBill.grand} (${escHtml(c.lastBill.billNo)})` : '')
+      : `<strong>${t('New customer')}</strong>`;
+    if (c.openOrders.length) html += `<br/>🧵 ${c.openOrders.length} ${t('stitching order open')}: ` + c.openOrders.map(o => `${escHtml(o.orderNo)} (${escHtml(String(o.status).replace(/^\d\.\s*/, ''))})`).join(', ');
+    if (c.reseller && priceMode === 'retail') html += `<br/><button type="button" class="btn btn-outline btn-sm" onclick="setPriceMode('reseller')">${t('Use reseller price')}</button>`;
+    box.innerHTML = html;
+    box.style.display = 'block';
+  }
+
+  // --- Payment buttons, cash change, split ---
+  let lastTotals = null;
+  function setPay(mode) {
+    document.getElementById('payMode').value = mode;
+    updateTotals();
+  }
+  function getPayMode(grand) {
+    const mode = document.getElementById('payMode').value;
+    if (mode !== 'Split') return mode;
+    if (!(grand > 0)) return 'Cash';
+    const cash = Math.min(grand, Math.max(0, Number(document.getElementById('splitCash').value) || 0));
+    return `Split (Cash ₹${cash} + UPI ₹${grand - cash})`;
+  }
+  function afterTotals(r) {
+    lastTotals = r;
+    const sel = document.getElementById('payMode');
+    if (r.grand >= 0 && sel.value === 'Store Credit Note') sel.value = 'UPI / QR';
+    document.querySelectorAll('#payBtns button').forEach(b => {
+      b.classList.toggle('active', b.dataset.pay === sel.value);
+      if (b.dataset.pay === 'Store Credit Note') b.style.display = r.grand < 0 ? 'block' : 'none';
+    });
+    updatePayExtras();
+    updateStickyBill();
+  }
+  function updatePayExtras() {
+    const mode = document.getElementById('payMode').value;
+    const grand = lastTotals ? lastTotals.grand : 0;
+    const cashRow = document.getElementById('cashRow'), splitRow = document.getElementById('splitRow');
+    cashRow.style.display = mode === 'Cash' && grand > 0 ? 'block' : 'none';
+    splitRow.style.display = mode === 'Split' && grand > 0 ? 'block' : 'none';
+    const got = Number(document.getElementById('cashReceived').value) || 0;
+    const ch = document.getElementById('cashChange');
+    if (!got) ch.textContent = '';
+    else if (got >= grand) ch.innerHTML = `${t('Return to customer')}: <strong>₹${(got - grand).toLocaleString('en-IN')}</strong>`;
+    else ch.innerHTML = `<span style="color:var(--danger);">${t('Still to collect')}: <strong>₹${(grand - got).toLocaleString('en-IN')}</strong></span>`;
+    const sc = Number(document.getElementById('splitCash').value) || 0;
+    document.getElementById('splitInfo').innerHTML = sc ? `${t('UPI part')}: <strong>₹${Math.max(0, grand - sc).toLocaleString('en-IN')}</strong>` : '';
+  }
+
+  // --- Automatic GST per piece ---
+  // Apparel: 5% when the price of a piece is up to ₹2,500, 18% above (GST rates from 22 Sep 2025).
+  // Stitching / tailoring services: 5%. Confirm with your CA and change these numbers if needed.
+  const GST_SLAB_LIMIT = 2500, GST_LOW = 5, GST_HIGH = 18, GST_SERVICE = 5;
+  function calcGST(sub, net) {
+    const mode = document.getElementById('gstType').value;
+    if (mode !== 'auto') {
+      const r = Number(mode) || 0;
+      return { rate: r, amount: net > 0 ? Math.round((net * r) / 100) : 0, label: r + '%' };
+    }
+    if (!(net > 0) || !(sub > 0)) return { rate: GST_LOW, amount: 0, label: GST_LOW + '%' };
+    const f = net / sub;
+    let amt = 0;
+    const rates = new Set();
+    cart.forEach(c => {
+      if (c.isReturn) return;
+      let unit, r;
+      if (c.isCustomService) { unit = c.customPrice; r = GST_SERVICE; }
+      else {
+        const p = products.find(x => x.id === c.id);
+        if (!p) return;
+        unit = priceMode === 'retail' ? p.retail : p.reseller;
+        r = unit * f <= GST_SLAB_LIMIT ? GST_LOW : GST_HIGH;
+      }
+      rates.add(r);
+      amt += (unit * c.qty * f * r) / 100;
+    });
+    const list = [...rates].sort((a, b) => a - b);
+    if (!list.length) return { rate: GST_LOW, amount: 0, label: GST_LOW + '%' };
+    return { rate: Math.max(...list), amount: Math.round(amt), label: list.map(x => x + '%').join(' + ') };
+  }
+
+  // --- Sticky bill bar (phones) ---
+  function updateStickyBill() {
+    const bar = document.getElementById('stickyBill');
+    if (!bar) return;
+    const n = cart.filter(c => !c.isReturn).reduce((a, c) => a + (c.qty || 1), 0);
+    const show = currentView === 'pos' && cart.length > 0 && !isTailorMode();
+    bar.classList.toggle('show', show);
+    const g = lastTotals ? lastTotals.grand : 0;
+    document.getElementById('stickyBillText').textContent = `${n} ${t(n === 1 ? 'item' : 'items')} · ₹${Math.abs(g).toLocaleString('en-IN')}`;
+  }
+  function scrollToBill() {
+    document.getElementById('billPanelHead').scrollIntoView({ behavior: 'smooth', block: 'start' });
+  }
+  try {
+    const io = new IntersectionObserver(es => es.forEach(e => document.body.classList.toggle('bill-in-view', e.isIntersecting)), { threshold: 0, rootMargin: '0px 0px -45% 0px' });
+    window.addEventListener('load', () => { const el = document.getElementById('billPanelHead'); if (el) io.observe(el.closest('.panel')); });
+  } catch (e) {}
+
+  // --- Roles: tailor-only login ---
+  const TAILOR_ROLE = 'Tailor / Workshop';
+  let autoPickedStaff = false;
+  function signedInEmail() { return ((CLOUD && CLOUD.user && CLOUD.user.email) || '').toLowerCase(); }
+  function isTailorMode() { return getActiveStaff().role === TAILOR_ROLE; }
+  function applyRole() {
+    const em = signedInEmail();
+    const me = em ? staffList.find(s => (s.email || '').toLowerCase() === em) : null;
+    const locked = !!(me && me.role === TAILOR_ROLE);
+    if (me && (locked || !autoPickedStaff) && activeStaffId !== me.id) {
+      activeStaffId = me.id;
+      localStorage.setItem('vastra_active_staff', activeStaffId);
+      const sel = document.getElementById('activeStaffSelect');
+      if (sel) sel.value = me.id;
+      document.getElementById('billingStaffBadge').textContent = `Staff: ${me.name}`;
+    }
+    if (me) autoPickedStaff = true;
+    const tailor = isTailorMode();
+    document.body.classList.toggle('role-tailor', tailor);
+    document.body.classList.toggle('staff-locked', locked);
+    if (tailor && !['tailor', 'more', 'today'].includes(currentView)) switchView('tailor');
+  }
+  function setStaffEmail(id) {
+    const s = staffList.find(x => x.id === id);
+    if (!s) return;
+    const v = prompt(`Google (Gmail) address that ${s.name} signs in with.\nLeave empty to remove.\n\nAlso add this address to the Firestore rules list, or they can't sign in.`, s.email || '');
+    if (v === null) return;
+    const email = v.trim().toLowerCase();
+    if (email && !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) { alert('That does not look like an email address.'); return; }
+    if (email && staffList.some(x => x.id !== id && (x.email || '').toLowerCase() === email)) { alert('Another staff member already uses this email.'); return; }
+    s.email = email;
+    persist();
+    renderStaffTable();
+    applyRole();
+  }
+
+  // --- English / Hindi ---
+  const HI = {
+    'Today': 'आज', 'Bill': 'बिल', 'Orders': 'ऑर्डर', 'Stock': 'स्टॉक', 'More': 'और',
+    'Install App': 'ऐप इंस्टॉल करें',
+    'Select Products': 'सामान चुनें', 'Retail Price': 'रिटेल रेट', 'Reseller / Wholesale': 'रीसेलर / होलसेल', 'Cam Scan': 'कैमरा स्कैन',
+    'All Categories': 'सभी कैटेगरी', 'All Fabrics': 'सभी फ़ैब्रिक',
+    'Unstitched Suit': 'अनसिला सूट', 'Saree': 'साड़ी', 'Dupatta / Stole': 'दुपट्टा / स्टोल', 'Lehenga / Dress Material': 'लहंगा / ड्रेस मटीरियल',
+    'Current Bill': 'मौजूदा बिल', 'Add Shipping': 'पार्सल भेजना है', 'Exchange / Return': 'बदली / वापसी', 'Apply Credit': 'क्रेडिट लगाएँ', 'Clear': 'साफ़ करें',
+    'Tap a suit or saree image on the left to add to bill': 'बिल में जोड़ने के लिए सूट या साड़ी पर टैप करें या टैग स्कैन करें',
+    'Tax / Invoice Type': 'टैक्स / बिल का प्रकार', 'Non-GST Estimate Slip (0%)': 'बिना GST कच्ची पर्ची (0%)',
+    'GST bill (auto 5% / 18%)': 'GST बिल (अपने-आप 5% / 18%)',
+    'Discount (₹)': 'छूट (₹)', 'Shipping / Courier (₹)': 'पार्सल / कूरियर (₹)', 'Payment': 'भुगतान',
+    'Cash': 'नकद', 'Card': 'कार्ड', 'Split': 'आधा-आधा', 'Khata': 'खाता', 'Credit note': 'क्रेडिट नोट',
+    'Cash received (₹)': 'ग्राहक से मिला नकद (₹)', 'Cash part (₹) — the rest is UPI': 'नकद हिस्सा (₹) — बाकी UPI',
+    'Credit Note Validity Period': 'क्रेडिट नोट कितने दिन चलेगा',
+    'New Items Subtotal': 'नए सामान का जोड़', 'Returned Items Credit': 'वापस सामान का क्रेडिट', 'Discount': 'छूट', 'Shipping / Courier': 'पार्सल / कूरियर',
+    'Grand Total': 'कुल रकम', 'Exchange Balance Due': 'बदली के बाद बाकी', 'New Store Credit to Issue': 'नया स्टोर क्रेडिट', 'Cash / UPI Refund Payable': 'नकद / UPI वापस देना है',
+    'Generate Bill & Update Stock': 'बिल बनाएँ', 'Generate Bill & Queue Shipment': 'बिल बनाएँ और पार्सल जोड़ें',
+    'Complete Exchange & Update Stock': 'बदली पूरी करें', 'Process Refund & Restock': 'पैसे वापस करें', 'Issue Store Credit Note & Restock': 'स्टोर क्रेडिट नोट दें',
+    'Checkout ›': 'चेकआउट ›',
+    "Today's takings": 'आज की बिक्री', 'Total': 'कुल',
+    'Trials due today': 'आज के ट्रायल', 'Overdue orders': 'देरी वाले ऑर्डर', 'Ready, not collected': 'तैयार, ले जाना बाकी',
+    'Parcels to send': 'भेजने वाले पार्सल', 'Low stock (2 pcs or less)': 'कम स्टॉक (2 पीस या कम)',
+    'Return or exchange': 'वापसी या बदली', 'Find the bill and take items back': 'बिल ढूँढें और सामान वापस लें',
+    'Store credits': 'स्टोर क्रेडिट', 'Credit notes and gift vouchers': 'क्रेडिट नोट और गिफ़्ट वाउचर',
+    'Sales and bills': 'बिक्री और बिल', 'All bills, totals, backup': 'सारे बिल, जोड़, बैकअप',
+    'Print labels': 'लेबल छापें', 'Barcode and QR price tags': 'बारकोड और QR प्राइस टैग',
+    'Settings and staff': 'सेटिंग और स्टाफ़', 'Shop details, sync, staff logins': 'दुकान की जानकारी, सिंक, स्टाफ़ लॉगिन',
+    'Install app': 'ऐप इंस्टॉल करें', 'Add VastraPOS to this phone': 'इस फ़ोन में VastraPOS जोड़ें', 'Sign out': 'साइन आउट',
+    'Stitching': 'सिलाई', 'Parcels': 'पार्सल', 'Catalog & stock': 'कैटलॉग और स्टॉक',
+    'Active Stitching Orders': 'चालू सिलाई ऑर्डर', 'Ready for Trial / Pickup': 'ट्रायल / डिलीवरी के लिए तैयार', 'Due Today / Overdue': 'आज देना / देरी',
+    'Pending Tailor Balance': 'सिलाई का बाकी पैसा', 'New Customized Tailor / Suit Stitching Order': 'नया सिलाई ऑर्डर',
+    'Customer Name *': 'ग्राहक का नाम *', 'Customer WhatsApp No.': 'ग्राहक का WhatsApp नंबर', 'Service Type *': 'काम का प्रकार *',
+    'Suit / Saree Design No. & Fabric *': 'सूट / साड़ी डिज़ाइन नं. और कपड़ा *', 'Assigned Tailor / Masterji': 'मास्टरजी / दर्ज़ी',
+    'Delivery / Trial Date *': 'डिलीवरी / ट्रायल की तारीख *', 'Stitching Charge (₹) *': 'सिलाई (₹) *', 'Advance Paid (₹)': 'एडवांस (₹)',
+    'Stitching Status': 'सिलाई की स्थिति', 'Measurements & Design Instructions (Kameez / Salwar / Neck / Sleeve)': 'नाप और डिज़ाइन (कमीज़ / सलवार / गला / बाजू)',
+    'Book Stitching Order': 'सिलाई ऑर्डर बुक करें', 'Suit Stitching & Alteration Tracker': 'सिलाई और ऑल्टरेशन ट्रैकर',
+    'All Orders': 'सभी ऑर्डर', 'Cutting / At Tailor': 'कटिंग / दर्ज़ी के पास', 'Ready for Trial': 'ट्रायल के लिए तैयार', 'Ready for Pickup': 'ले जाने के लिए तैयार', 'Delivered': 'दे दिया',
+    '1. Cutting / Sent to Tailor': '1. कटिंग / दर्ज़ी को भेजा', '2. Stitching in Progress': '2. सिलाई चल रही है', '3. Ready for Trial': '3. ट्रायल के लिए तैयार',
+    '4. Ready for Pickup': '4. ले जाने के लिए तैयार', '5. Delivered & Paid': '5. दे दिया, पैसा मिला',
+    'Order # & Due': 'ऑर्डर # और तारीख', 'Customer': 'ग्राहक', 'Suit / Service & Measurements': 'सूट / काम और नाप', 'Tailor': 'दर्ज़ी',
+    'Status (Live Sync)': 'स्थिति', 'Charges / Balance': 'चार्ज / बाकी', 'Actions': 'काम',
+    'Add / Update Unstitched Suit or Saree': 'सूट या साड़ी जोड़ें / बदलें', 'Design / Catalog No. *': 'डिज़ाइन नंबर *', 'Product Title *': 'नाम *',
+    'Category': 'कैटेगरी', 'Fabric': 'कपड़ा', 'Color / Shade': 'रंग', 'Retail Price (₹) *': 'रिटेल रेट (₹) *', 'Reseller Price (₹) *': 'रीसेलर रेट (₹) *',
+    'Stock Qty (Pcs) *': 'स्टॉक (पीस) *', 'Save to Catalog': 'कैटलॉग में सेव करें', 'Photo': 'फ़ोटो', 'Design No.': 'डिज़ाइन नं.', 'Item Details': 'सामान',
+    'Retail': 'रिटेल', 'Reseller': 'रीसेलर', 'Edit': 'बदलें', 'Del': 'हटाएँ',
+    'Send on WhatsApp': 'WhatsApp पर भेजें', 'Close': 'बंद करें',
+    'Scan Barcode / QR + Enter': 'बारकोड / QR स्कैन करें', 'Search Suit/Saree name, Color...': 'सूट/साड़ी का नाम या रंग खोजें...',
+    'Customer phone (10 digits)': 'ग्राहक का फ़ोन (10 अंक)', 'Customer / Reseller Name': 'ग्राहक / रीसेलर का नाम',
+    'Search customer, order #, tailor, design...': 'ग्राहक, ऑर्डर #, दर्ज़ी, डिज़ाइन खोजें...',
+    // pieces used in messages built by the app
+    'more': 'और', 'Bills': 'बिल', 'last': 'पिछला', 'Repeat customer': 'पुराना ग्राहक', 'New customer': 'नया ग्राहक',
+    'stitching order open': 'सिलाई ऑर्डर चालू', 'Use reseller price': 'रीसेलर रेट लगाएँ', 'Return to customer': 'ग्राहक को लौटाएँ',
+    'Still to collect': 'अभी लेना बाकी', 'UPI part': 'UPI हिस्सा', 'item': 'पीस', 'items': 'पीस'
+  };
+  let curLang = localStorage.getItem('vastra_lang') === 'hi' ? 'hi' : 'en';
+  const t = en => (curLang === 'hi' && HI[en]) || en;
+  const SKIP_I18N = el => el.closest && el.closest('script,style,#receiptPrintArea,#tagPrintSheet,.receipt-box');
+  function i18nText(node) {
+    if (node.__en === undefined) node.__en = node.nodeValue;
+    const en = node.__en;
+    if (curLang !== 'hi') { if (node.nodeValue !== en) node.nodeValue = en; return; }
+    const trimmed = en.trim();
+    if (!trimmed) return;
+    const lead = (trimmed.match(/^[^\p{L}\p{N}₹]*/u) || [''])[0];
+    const core = trimmed.slice(lead.length);
+    const hi = HI[core] || HI[trimmed];
+    if (!hi) return;
+    const out = en.replace(trimmed, HI[trimmed] ? hi : lead + hi);
+    if (node.nodeValue !== out) node.nodeValue = out;
+  }
+  function i18nAttr(el) {
+    if (el.__enPh === undefined) el.__enPh = el.getAttribute('placeholder');
+    const en = el.__enPh || '';
+    const core = en.replace(/^[^\p{L}\p{N}₹]+/u, '');
+    const out = curLang === 'hi' && HI[core] ? HI[core] : en;
+    if (el.getAttribute('placeholder') !== out) el.setAttribute('placeholder', out);
+  }
+  function i18nTree(root) {
+    if (!root) return;
+    if (root.nodeType === 3) { if (!SKIP_I18N(root.parentElement || document.body)) i18nText(root); return; }
+    if (root.nodeType !== 1 || SKIP_I18N(root)) return;
+    const w = document.createTreeWalker(root, NodeFilter.SHOW_TEXT);
+    let n;
+    while ((n = w.nextNode())) { if (!SKIP_I18N(n.parentElement)) i18nText(n); }
+    if (root.hasAttribute && root.hasAttribute('placeholder')) i18nAttr(root);
+    root.querySelectorAll && root.querySelectorAll('[placeholder]').forEach(i18nAttr);
+  }
+  let i18nObserver = null;
+  function applyLang() {
+    document.documentElement.lang = curLang === 'hi' ? 'hi' : 'en';
+    i18nTree(document.body);
+    if (!i18nObserver) {
+      i18nObserver = new MutationObserver(muts => {
+        if (curLang !== 'hi') return;
+        muts.forEach(m => m.addedNodes.forEach(i18nTree));
+      });
+      i18nObserver.observe(document.body, { childList: true, subtree: true });
+    }
+  }
+  function toggleLang() {
+    curLang = curLang === 'hi' ? 'en' : 'hi';
+    localStorage.setItem('vastra_lang', curLang);
+    applyLang();
+    updateTotals();
+    renderMore();
+    if (currentView === 'today') renderToday();
+    lookupCustomer('pos');
+  }
+
   // Initial Boot
   (async function bootApp() {
     await loadAllImagesFromIDB();
@@ -4473,8 +5028,10 @@
     await migrateStaffPins();
     localStorage.removeItem('vastra_fb_url');
     syncShopBrandingUI();
+    applyLang();
     renderStaffSwitcher();
     renderPOSGrid();
+    setPay(document.getElementById('payMode').value || 'UPI / QR');
     renderCloudPanel();
     updateSyncPill();
     try { if (navigator.storage && navigator.storage.persist) navigator.storage.persist(); } catch (e) {}
