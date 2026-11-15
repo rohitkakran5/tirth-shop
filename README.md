@@ -11,6 +11,18 @@ Works on Android phones (install from Chrome) and computers, also without intern
 - `lib/` – QR code (qrcodejs, MIT), barcode (JsBarcode, MIT) and camera scanner (html5-qrcode, Apache-2.0) libraries
 - `firestore.rules` – security rules template (paste into Firebase console with your staff emails)
 
+## Screens
+- Bottom bar (phones) / top bar (computer): **Today** (trials due, overdue and ready orders, parcels, low stock, today's takings),
+  **Bill**, **Orders** (stitching + parcels), **Stock** (catalog + print labels), **More** (returns, store credits, sales, settings, language, sign out).
+- Billing: type the customer's phone first and a repeat customer's name, past bills, open stitching orders and store credit show up.
+  Payment is one tap (UPI, Cash, Card, Split, Khata, COD); Cash shows the change to return, Split records the cash and UPI parts.
+- GST bill works out 5% or 18% per piece by itself (5% up to ₹2,500 a piece, 18% above; stitching 5%). Change `GST_SLAB_LIMIT`
+  and the rates in `index.html` if your CA advises differently.
+- Language: More → हिंदी में देखें switches the screens to Hindi on that device.
+- Tailor login: Settings → Staff → set the tailor's Gmail address (role "Tailor / Workshop") and add the same address to the
+  Firestore rules. When they sign in they see only the stitching orders, without prices, takings or customer phone numbers.
+  This hides screens in the app; the Firestore rules still let every listed account read the shop data.
+
 ## How sync works
 - Staff sign in with Google. Only the Gmail addresses listed in the Firestore rules can read or write anything.
 - Each product, bill, tailoring order, parcel, credit note and staff member is its own record under
