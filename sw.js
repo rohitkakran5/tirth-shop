@@ -3,7 +3,7 @@
 //   offline or when the network is too slow (after 3 seconds).
 // - Other app files are served from the cache and refreshed in the background.
 // - Firebase, Google sign-in and every non-GET request are never touched by this worker.
-const CACHE = 'vastrapos-v4';
+const CACHE = 'vastrapos-v5';
 const CORE = [
   './', './index.html', './manifest.json', './firebase.js',
   './lib/qrcode.min.js', './lib/JsBarcode.all.min.js', './lib/html5-qrcode.min.js',

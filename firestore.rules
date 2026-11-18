@@ -1,18 +1,82 @@
 rules_version = '2';
 service cloud.firestore {
   match /databases/{database}/documents {
-    // Only these Google accounts can read or change the shop data.
-    // Put your own and your staff's Gmail addresses here, in lower case, then Publish.
-    function allowed() {
+
+    // OWNER Gmail address(es): full control, and the only ones who can add/remove staff.
+    // Write in lower case. Staff are added from inside the app (Users & Cloud), not here.
+    function isOwner() {
       return request.auth != null
         && request.auth.token.email_verified == true
         && request.auth.token.email.lower() in [
-          'owner@gmail.com',
-          'staff@gmail.com'
+          'OWNER_EMAIL_1@gmail.com'
         ];
     }
-    match /{document=**} {
-      allow read, write: if allowed();
+
+    function myEmail() { return request.auth.token.email.lower(); }
+
+    // Staff record: stores/<shop>/staff/<gmail> = { role, active } (written by the app when the owner adds staff)
+    function hasRole(storeId, allowedRoles) {
+      return isOwner() || (
+        request.auth != null
+        && request.auth.token.email_verified == true
+        && exists(/databases/$(database)/documents/stores/$(storeId)/staff/$(myEmail()))
+        && get(/databases/$(database)/documents/stores/$(storeId)/staff/$(myEmail())).data.active == true
+        && get(/databases/$(database)/documents/stores/$(storeId)/staff/$(myEmail())).data.role in allowedRoles
+      );
+    }
+    function onlyChanges(fields) {
+      return request.resource.data.diff(resource.data).affectedKeys().hasOnly(fields);
+    }
+    function anyStaff(storeId) { return hasRole(storeId, ['owner', 'counter', 'tailor', 'inventory']); }
+
+    match /stores/{storeId} {
+      // Staff list (Gmail -> role): only the owner manages it; each person can read their own entry
+      match /staff/{staffId} {
+        allow read: if isOwner() || (request.auth != null && myEmail() == staffId);
+        allow write: if isOwner();
+      }
+
+      // meta/roster = PIN logins shown on the sign-in screen
+      match /meta/{docId} {
+        allow read: if anyStaff(storeId);
+        allow write: if isOwner();
+      }
+
+      // Catalog: Owner & Stock Manager manage; Counter may only change stock (billing / returns)
+      match /products/{prodId} {
+        allow read: if anyStaff(storeId);
+        allow create, delete: if hasRole(storeId, ['owner', 'inventory']);
+        allow update: if hasRole(storeId, ['owner', 'inventory'])
+                      || (hasRole(storeId, ['counter']) && onlyChanges(['stock', 'updatedAt']));
+      }
+
+      match /images/{imgId} {
+        allow read: if anyStaff(storeId);
+        allow write: if hasRole(storeId, ['owner', 'inventory']);
+      }
+
+      // Bills: Counter can create and mark returned pieces; only Owner can edit or delete a bill
+      match /sales/{billId} {
+        allow read, create: if hasRole(storeId, ['owner', 'counter']);
+        allow update: if isOwner() || hasRole(storeId, ['owner'])
+                      || (hasRole(storeId, ['counter']) && onlyChanges(['returned', 'updatedAt']));
+        allow delete: if isOwner();
+      }
+
+      match /shipments/{shipId} {
+        allow read, create, update: if hasRole(storeId, ['owner', 'counter', 'inventory']);
+        allow delete: if hasRole(storeId, ['owner']);
+      }
+
+      match /creditNotes/{cnId} {
+        allow read, create, update: if hasRole(storeId, ['owner', 'counter']);
+        allow delete: if hasRole(storeId, ['owner']);
+      }
+
+      match /tailorOrders/{orderId} {
+        allow read, create, update: if hasRole(storeId, ['owner', 'counter', 'tailor']);
+        allow delete: if hasRole(storeId, ['owner']);
+      }
     }
   }
 }
